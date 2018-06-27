@@ -1,8 +1,30 @@
-<?xml version='1.0' encoding='UTF-8'?><wsdl:definitions xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:tns="http://v2_0.service.ws.mas.test/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:ns1="http://schemas.xmlsoap.org/soap/http" name="MediathequeService" targetNamespace="http://v2_0.service.ws.mas.test/">
+<?xml version='1.0' encoding='UTF-8'?><wsdl:definitions xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:tns="http://v3_0.service.ws.mas.test/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:ns1="http://schemas.xmlsoap.org/soap/http" name="MediathequeService" targetNamespace="http://v3_0.service.ws.mas.test/">
   <wsdl:types>
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://v2_0.service.ws.mas.test/" elementFormDefault="unqualified" targetNamespace="http://v2_0.service.ws.mas.test/" version="1.0">
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://v3_0.service.ws.mas.test/" elementFormDefault="unqualified" targetNamespace="http://v3_0.service.ws.mas.test/" version="1.0">
+<xs:element name="getDisques" type="tns:getDisques"/>
+<xs:element name="getDisquesResponse" type="tns:getDisquesResponse"/>
 <xs:element name="getLivres" type="tns:getLivres"/>
 <xs:element name="getLivresResponse" type="tns:getLivresResponse"/>
+<xs:complexType name="getDisques">
+    <xs:sequence/>
+  </xs:complexType>
+<xs:complexType name="getDisquesResponse">
+    <xs:sequence>
+      <xs:element maxOccurs="unbounded" minOccurs="0" name="return" type="tns:disque"/>
+    </xs:sequence>
+  </xs:complexType>
+<xs:complexType name="disque">
+    <xs:sequence>
+      <xs:element maxOccurs="unbounded" minOccurs="0" name="interpretes" nillable="true" type="tns:interprete"/>
+      <xs:element minOccurs="0" name="titre" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+<xs:complexType name="interprete">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="nom" type="xs:string"/>
+      <xs:element minOccurs="0" name="prenom" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
 <xs:complexType name="getLivres">
     <xs:sequence/>
   </xs:complexType>
@@ -30,11 +52,25 @@
     <wsdl:part element="tns:getLivresResponse" name="parameters">
     </wsdl:part>
   </wsdl:message>
+  <wsdl:message name="getDisques">
+    <wsdl:part element="tns:getDisques" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getDisquesResponse">
+    <wsdl:part element="tns:getDisquesResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
   <wsdl:message name="getLivres">
     <wsdl:part element="tns:getLivres" name="parameters">
     </wsdl:part>
   </wsdl:message>
   <wsdl:portType name="Mediatheque">
+    <wsdl:operation name="getDisques">
+      <wsdl:input message="tns:getDisques" name="getDisques">
+    </wsdl:input>
+      <wsdl:output message="tns:getDisquesResponse" name="getDisquesResponse">
+    </wsdl:output>
+    </wsdl:operation>
     <wsdl:operation name="getLivres">
       <wsdl:input message="tns:getLivres" name="getLivres">
     </wsdl:input>
@@ -44,6 +80,15 @@
   </wsdl:portType>
   <wsdl:binding name="MediathequeServiceSoapBinding" type="tns:Mediatheque">
     <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="getDisques">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="getDisques">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="getDisquesResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
     <wsdl:operation name="getLivres">
       <soap:operation soapAction="" style="document"/>
       <wsdl:input name="getLivres">
@@ -56,7 +101,7 @@
   </wsdl:binding>
   <wsdl:service name="MediathequeService">
     <wsdl:port binding="tns:MediathequeServiceSoapBinding" name="MediathequePort">
-      <soap:address location="http://localhost:8080/serviceBibliotheque/services/mediatheque/v2_0"/>
+      <soap:address location="http://localhost:8080/serviceBibliotheque/services/mediatheque/v3_0"/>
     </wsdl:port>
   </wsdl:service>
 </wsdl:definitions>
