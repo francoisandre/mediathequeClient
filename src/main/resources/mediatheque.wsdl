@@ -1,0 +1,61 @@
+<?xml version='1.0' encoding='UTF-8'?><wsdl:definitions xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:tns="http://v1_0.service.ws.mas.test/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:ns1="http://schemas.xmlsoap.org/soap/http" name="MediathequeService" targetNamespace="http://v1_0.service.ws.mas.test/">
+  <wsdl:types>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://v1_0.service.ws.mas.test/" elementFormDefault="unqualified" targetNamespace="http://v1_0.service.ws.mas.test/" version="1.0">
+<xs:element name="getLivres" type="tns:getLivres"/>
+<xs:element name="getLivresResponse" type="tns:getLivresResponse"/>
+<xs:complexType name="getLivres">
+    <xs:sequence/>
+  </xs:complexType>
+<xs:complexType name="getLivresResponse">
+    <xs:sequence>
+      <xs:element maxOccurs="unbounded" minOccurs="0" name="return" type="tns:livre"/>
+    </xs:sequence>
+  </xs:complexType>
+<xs:complexType name="livre">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="auteur" type="tns:auteur"/>
+      <xs:element minOccurs="0" name="titre" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+<xs:complexType name="auteur">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="nom" type="xs:string"/>
+      <xs:element minOccurs="0" name="prenom" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>
+  </wsdl:types>
+  <wsdl:message name="getLivres">
+    <wsdl:part element="tns:getLivres" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getLivresResponse">
+    <wsdl:part element="tns:getLivresResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:portType name="Mediatheque">
+    <wsdl:operation name="getLivres">
+      <wsdl:input message="tns:getLivres" name="getLivres">
+    </wsdl:input>
+      <wsdl:output message="tns:getLivresResponse" name="getLivresResponse">
+    </wsdl:output>
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="MediathequeServiceSoapBinding" type="tns:Mediatheque">
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="getLivres">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="getLivres">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="getLivresResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="MediathequeService">
+    <wsdl:port binding="tns:MediathequeServiceSoapBinding" name="MediathequePort">
+      <soap:address location="http://localhost:8080/serviceBibliotheque/services/mediatheque/v1_0"/>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>
